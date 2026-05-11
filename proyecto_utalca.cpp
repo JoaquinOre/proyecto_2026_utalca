@@ -27,7 +27,14 @@ public:
         }
     }
 
-    void add(const string& value){}
+    void add(const string& value){
+        Node* nwNode = new Node(value);
+        nwNode->next = head;
+        head = nwNode;
+        _count++;
+       
+
+    }
     bool removeOne(const string& value){}
 
 }
