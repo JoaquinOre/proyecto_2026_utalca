@@ -35,7 +35,44 @@ public:
        
 
     }
-    bool removeOne(const string& value){}
+    bool removeOne(const string& value){
+
+        if (head == nullptr) return 0;
+        if (head -> data == value){
+            Node* temp = head; 
+            head = head->next;
+            delete temp;
+            return;
+        }
+        Node* prev = head;
+        Node* cur = head->next;
+        while (cur != nullptr) {
+            if (cur->data == value) {
+               
+                prev->next = cur->next;
+                delete cur; 
+                return;
+            }  
+            prev = prev->next;
+            cur = cur->next;
+        }
+    }
+
+    bool contains(const string& value) const{
+        Node* prev = head;
+        Node* cur = head->next;
+        while (cur != nullptr) {
+            if (cur->data == value) {
+               
+                return true;
+            }  
+            prev = prev->next;
+            cur = cur->next;
+        }
+        return false;
+
+
+    }
 
 }
 
