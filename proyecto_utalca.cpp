@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stack>
 using namespace std;
 
 
@@ -42,7 +43,8 @@ public:
             Node* temp = head; 
             head = head->next;
             delete temp;
-            return;
+            _count--;
+            return true;
         }
         Node* prev = head;
         Node* cur = head->next;
@@ -51,22 +53,22 @@ public:
                
                 prev->next = cur->next;
                 delete cur; 
-                return;
+                _count--;
+                return true;
             }  
             prev = prev->next;
             cur = cur->next;
         }
+        return false;
     }
 
     bool contains(const string& value) const{
-        Node* prev = head;
-        Node* cur = head->next;
+        Node* cur = head;
         while (cur != nullptr) {
             if (cur->data == value) {
                
                 return true;
-            }  
-            prev = prev->next;
+            }   
             cur = cur->next;
         }
         return false;
@@ -74,17 +76,75 @@ public:
 
     }
 
-}
+    int count(const string& value)const{
+        if (head == nullptr) {
+            cout << "head nullptr";
+            return;
+        }
+        Node* cur = head; 
+        int contador = 0;
+        while(cur != nullptr){
+            if(cur->data == value){
+                contador++;
+            }
+            cur = cur->next;
+        }
+        return contador; 
+    }
+    int size()const{
+        return _count;
+    }
+    void print() const{
+        cout << "Bag: ["; 
+        Node* cur = head;
 
+        while (cur != nullptr)
+        {
+            cout << cur->data;
+            if (cur->next != nullptr) cout << ",";
+        }
+        cout << "]";
+        
+
+    }
+
+}
+struct Command{
+    enum Type {ADD, REMOVE} type;
+    string value;
+};
 class UndoableBag{
 
+private: 
+    Bag bag;
+    stack<Command> undoStack;
+    stack<Command> redoStack;
+public:
+
+    UndoableBag(){
+    }
+
+    void add(const string& value){
+        bag.add(value);
+        undoStack = Command{ADD, value};
+        redoStack = stack<Command>{};
+
+        cout << "ADD: " << value;
+        
+    }
+    bool removeOne(const string& value){
+        bool removed = bag.removeOne(value);
+        if(removed == true){
+
+        }
+    }
 }
 
 
 
 int main(){
 
-    cout << "hola mundo, espero poder hacerlo bien lol" << endl ;
+    cout << "hola mundo, espero poder hacerlo bien lol(league of legends)" << endl ;
 
     return 0;
 }
